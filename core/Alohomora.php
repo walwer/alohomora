@@ -3,6 +3,7 @@
 namespace Alohomora\core;
 
 use Alohomora\model\Chunk\ChunkFactory;
+use Alohomora\model\Decrypt\Decryptor;
 use Alohomora\model\Encrypt\EncryptFactory;
 use Alohomora\model\File\FileFactory;
 
@@ -52,5 +53,11 @@ class Alohomora
     public function setOutputDirectory(string $output)
     {
         $this->outputPath = $output;
+    }
+
+    public function decryptData(string $directory, string $fileName, string $privateKey)
+    {
+        $decryptor = new Decryptor($directory, $fileName, $privateKey);
+        $decryptor->getDecryptedData();
     }
 }

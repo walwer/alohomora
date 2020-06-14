@@ -32,8 +32,9 @@ class Decryptor
 
         $files = [];
 
-        foreach ($filenames as $file) {
-            $files[] = file_get_contents($directory . '/' . $file);
+        foreach ($filenames as $file)
+        {
+            $files[] = file_get_contents($directory.'/'.$file);
         }
 
         return $files;
@@ -41,10 +42,9 @@ class Decryptor
 
     private function _decryptSingleFile(string $file)
     {
-
-        $file = explode('^', $file);
+        $file = base64_decode($file);
         $content = NULL;
-        openssl_open(base64_decode($file[0]), $content, base64_decode($file[1]), $this->privateKey);
+        openssl_open($file, $plaintext, NULL, $this->privateKey);
         return $content;
     }
 
@@ -52,24 +52,10 @@ class Decryptor
     {
         $files = $this->_getFileContents();
 
-        if (empty($files)) throw new \Error('No files to decode');
-
-        $contents = [];
+        if(empty($files)) throw new \Error('No files to decode');
 
         foreach ($files as $file) {
-            $contents[] = $this->_decryptSingleFile($file);
+            var_dump($this->_decryptSingleFile($file));
         }
-
-        usort($contents, function($a, $b) {
-            return $a['s'] <=> $b['s'];
-        });
-
-        var_dump($contents);
-
-        $result = array_reduce($contents, function($acc, $item) {
-            return $acc.json_decode($item, true)['c'];
-        }, "");
-
-        return json_decode($result);
     }
 }
