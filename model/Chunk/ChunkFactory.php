@@ -1,8 +1,8 @@
 <?php
 
-namespace model\FileFactory;
+namespace model\Chunk;
 
-class FileFactory
+class ChunkFactory
 {
     const CHUNK_MAX_SIZE = 48;
 

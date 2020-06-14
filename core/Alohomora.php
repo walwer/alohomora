@@ -1,6 +1,6 @@
 <?php
 
-namespace Alohomora;
+namespace core;
 
 class Alohomora
 {
