@@ -1,6 +1,6 @@
 <?php
 
-namespace model\Chunk;
+namespace Alohomora\model\Chunk;
 
 class ChunkFactory
 {
@@ -34,7 +34,6 @@ class ChunkFactory
      */
     public function splitStringToChunks(string $string)
     {
-       $result = str_split($string, self::CHUNK_MAX_SIZE);
-       return $result;
+        return str_split($string, self::CHUNK_MAX_SIZE);
     }
 }

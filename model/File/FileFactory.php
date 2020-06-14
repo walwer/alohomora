@@ -1,6 +1,6 @@
 <?php
 
-namespace model\File;
+namespace Alohomora\model\File;
 
 class FileFactory
 {

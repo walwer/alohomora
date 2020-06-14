@@ -1,0 +1,19 @@
+{
+    "name": "walwer/alohomora",
+    "description": "A small lib for encrypting and decrypting data",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bartłomiej Waliszko",
+            "email": "bartekwaliszko@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Alohomora\\": ""
+        }
+    }
+}
