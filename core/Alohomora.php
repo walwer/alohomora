@@ -3,61 +3,72 @@
 namespace Alohomora\core;
 
 use Alohomora\model\Chunk\ChunkFactory;
-use Alohomora\model\Decrypt\Decryptor;
-use Alohomora\model\Encrypt\EncryptFactory;
 use Alohomora\model\File\FileFactory;
 
 class Alohomora
 {
     private $entry;
+    private $publicKey;
+    private $privateKey;
     private $outputPath;
-    private $fileName;
 
     public function __construct()
     {
     }
 
     /**
-     * @param $entry
+     * @param string $entry
      */
-    public function setEntry($entry)
+    public function setEntry(string $entry)
     {
-        $this->entry = json_encode($entry);
+        $this->entry = $entry;
     }
 
-    public function setFileName(string $name)
+    /**
+     * @param array $entry
+     */
+    public function setEntryFromArray(array $entry)
     {
-        $this->fileName = $name;
+        $entry = json_encode($entry);
+        $this->entry = $entry;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setPublicKey(string $key)
+    {
+        $this->publicKey = $key;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setPrivateKey(string $key)
+    {
+        $this->privateKey = $key;
     }
 
     /**
      * @label('This is the main function of Alohomora that encrypt the given entry')
-     * @param string $publicKey
      */
-    public function encryptEntry(string $publicKey)
+    public function encryptEntry()
     {
         $chunkFactory = new ChunkFactory();
         $chunks = $chunkFactory->splitStringToChunks($this->entry);
 
-        $encryptionFactory = new EncryptFactory($chunks);
-        $encryptionFactory->setPublicKey($publicKey);
-        $encryptedChunks = $encryptionFactory->getEncryptedChunks();
+        /* TODO: Here chunks should be encrypted */
+        $encryptedChunks = $chunks;
 
-        $fileFactory = new FileFactory($this->outputPath, $this->fileName);
+        $fileFactory = new FileFactory();
         $fileFactory->createFilesFromChunks($encryptedChunks);
     }
 
     /**
      * @param string $output
      */
-    public function setOutputDirectory(string $output)
+    public function setOutputPath(string $output)
     {
         $this->outputPath = $output;
-    }
-
-    public function decryptData(string $directory, string $fileName, string $privateKey)
-    {
-        $decryptor = new Decryptor($directory, $fileName, $privateKey);
-        $decryptor->getDecryptedData();
     }
 }

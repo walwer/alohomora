@@ -10,16 +10,10 @@
         }
     ],
     "minimum-stability": "alpha",
-    "require": {
-        "ext-mbstring": "*",
-        "ext-json": "*"
-    },
+    "require": {},
     "autoload": {
         "psr-4": {
             "Alohomora\\": ""
         }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^7"
     }
 }
