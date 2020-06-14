@@ -7,7 +7,6 @@ class Decryptor
     private $inputDirectory;
     private $fileName;
     private $privateKey;
-    private $envelope;
 
     public function __construct(string $directory, string $fileName, string $privateKey)
     {
