@@ -46,7 +46,7 @@ class FileFactory
         $directory = $this->_getDirectoryForEncryptedFiles();
         foreach ($chunks as $key=>$chunk)
         {
-            file_put_contents($this->outputPath.'/'.$directory.'/'.$this->_getFileName(), $chunk);
+            file_put_contents($this->outputPath.'/'.$directory.'/'.$this->_getFileName(), $chunk['c']."^".$chunk['e']);
         }
 
         return sizeof($chunks);

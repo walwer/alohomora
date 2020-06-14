@@ -22,7 +22,7 @@ class EncryptFactory
         $publicKey = openssl_get_publickey($this->publicKey);
         $encrypted = $e = NULL;
         openssl_seal($chunk, $encrypted, $e, array($publicKey));
-        return base64_encode($encrypted);
+        return ['c'=>base64_encode($encrypted), 'e'=>base64_encode($e[0])];
     }
 
     public function getEncryptedChunks()
