@@ -2,9 +2,9 @@
 This library can be used to encrypt and decrypt files and data. 
 
 ***
-###Encryption
+### Encryption
 This process should cipher and split data over multiple chunks to secure the data
 
-###Decryption
+### Decryption
 This process should decrypt 
 ***
