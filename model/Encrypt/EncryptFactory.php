@@ -17,6 +17,14 @@ class EncryptFactory
         $this->publicKey = $key;
     }
 
+    private function _encryptData(string $chunk)
+    {
+        $publicKey = openssl_get_publickey($this->publicKey);
+        $encrypted = $e = NULL;
+        openssl_seal($chunk, $encrypted, $e, array($publicKey));
+        return base64_encode($encrypted);
+    }
+
     public function getEncryptedChunks()
     {
         $encrypted = [];
@@ -26,13 +34,5 @@ class EncryptFactory
         }
 
         return $encrypted;
-    }
-
-    private function _encryptData(string $chunk)
-    {
-        $publicKey = openssl_get_publickey($this->publicKey);
-        $encrypted = $e = NULL;
-        openssl_seal($chunk, $encrypted, $e, array($publicKey));
-        return ['c' => base64_encode($encrypted), 'e' => base64_encode($e[0])];
     }
 }
