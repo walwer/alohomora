@@ -9,4 +9,7 @@ $alohomora->setEntry($stringToEncrypt);
 $alohomora->setOutputDirectory(__DIR__.'/enc');
 $alohomora->setFileName('encrypted');
 $publicKey = file_get_contents(__DIR__."/public.pem");
-$alohomora->encryptEntry($publicKey);
+$privateKey = file_get_contents(__DIR__."/private.key");
+//$alohomora->encryptEntry($publicKey);
+
+$alohomora->decryptData(__DIR__.'/enc', 'encrypted', $privateKey);
