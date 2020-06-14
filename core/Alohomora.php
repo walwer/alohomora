@@ -3,6 +3,7 @@
 namespace Alohomora\core;
 
 use Alohomora\model\Chunk\ChunkFactory;
+use Alohomora\model\Encrypt\EncryptFactory;
 use Alohomora\model\File\FileFactory;
 
 class Alohomora
@@ -17,20 +18,11 @@ class Alohomora
     }
 
     /**
-     * @param string $entry
+     * @param $entry
      */
-    public function setEntry(string $entry)
+    public function setEntry($entry)
     {
-        $this->entry = $entry;
-    }
-
-    /**
-     * @param array $entry
-     */
-    public function setEntryFromArray(array $entry)
-    {
-        $entry = json_encode($entry);
-        $this->entry = $entry;
+        $this->entry = json_encode($entry);
     }
 
     /**
@@ -58,7 +50,9 @@ class Alohomora
         $chunks = $chunkFactory->splitStringToChunks($this->entry);
 
         /* TODO: Here chunks should be encrypted */
-        $encryptedChunks = $chunks;
+        $encryptionFactory = new EncryptFactory($chunks);
+        $encryptionFactory->setPublicKey($this->publicKey);
+        $encryptedChunks = $encryptionFactory->getEncryptedChunks();
 
         $fileFactory = new FileFactory();
         $fileFactory->createFilesFromChunks($encryptedChunks);
