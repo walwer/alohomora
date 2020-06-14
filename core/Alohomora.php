@@ -9,9 +9,8 @@ use Alohomora\model\File\FileFactory;
 class Alohomora
 {
     private $entry;
-    private $publicKey;
-    private $privateKey;
     private $outputPath;
+    private $fileName;
 
     public function __construct()
     {
@@ -25,43 +24,32 @@ class Alohomora
         $this->entry = json_encode($entry);
     }
 
-    /**
-     * @param string $key
-     */
-    public function setPublicKey(string $key)
+    public function setFileName(string $name)
     {
-        $this->publicKey = $key;
-    }
-
-    /**
-     * @param string $key
-     */
-    public function setPrivateKey(string $key)
-    {
-        $this->privateKey = $key;
+        $this->fileName = $name;
     }
 
     /**
      * @label('This is the main function of Alohomora that encrypt the given entry')
+     * @param string $publicKey
      */
-    public function encryptEntry()
+    public function encryptEntry(string $publicKey)
     {
         $chunkFactory = new ChunkFactory();
         $chunks = $chunkFactory->splitStringToChunks($this->entry);
 
-        /* TODO: Here chunks should be encrypted */
         $encryptionFactory = new EncryptFactory($chunks);
-        $encryptionFactory->setPublicKey($this->publicKey);
+        $encryptionFactory->setPublicKey($publicKey);
         $encryptedChunks = $encryptionFactory->getEncryptedChunks();
 
-        $fileFactory = new FileFactory();
+        $fileFactory = new FileFactory($this->outputPath, $this->fileName);
         $fileFactory->createFilesFromChunks($encryptedChunks);
     }
 
     /**
      * @param string $output
      */
-    public function setOutputPath(string $output)
+    public function setOutputDirectory(string $output)
     {
         $this->outputPath = $output;
     }
