@@ -9,7 +9,7 @@ This process encrypts given string  - splits it into chunks and then cipher each
 If you want to encode an array you must use PHP builtin `json_encode` function.
 
 ### Decryption
-This process should decrypt 
+This will be updated later
 ***
 
 ## How to use it
@@ -36,4 +36,8 @@ Creating an instance with constructor
 Here you should've prepared your public key string to encrypt your entry
 
 `$alohomora->encryptEntry($publicKey);`
+
+### Decrypt 
+
+Coming soon...
 
