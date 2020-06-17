@@ -12,7 +12,7 @@ If you want to encode an array you must use PHP builtin `json_encode` function.
 This will be updated later
 ***
 
-## How to use it
+## Docs
 
 ### Initialize the lib
 Creating an instance with constructor 
