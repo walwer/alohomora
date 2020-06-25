@@ -6,10 +6,7 @@ class ChunkFactory
 {
     const CHUNK_MAX_SIZE = 48;
 
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     /**
      * @param string $string
