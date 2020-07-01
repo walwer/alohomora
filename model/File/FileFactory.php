@@ -7,23 +7,35 @@ class FileFactory
     private $outputPath;
     private $fileName;
 
+    /**
+     * FileFactory constructor.
+     * @param string $outputPath
+     * @param string $fileName
+     */
     public function __construct(string $outputPath, string $fileName)
     {
         $this->outputPath = $outputPath;
         $this->fileName = $fileName;
     }
 
-    public function createFilesFromChunks(array $chunks)
+    /**
+     * @param array $chunks
+     * @return int
+     */
+    public function createFilesFromChunks(array $chunks): int
     {
-        $directory = $this->_getDirectoryForEncryptedFiles();
+        $directory = $this->getDirectoryForEncryptedFiles();
         foreach ($chunks as $key => $chunk) {
-            file_put_contents($this->outputPath . '/' . $directory . '/' . $this->_getFileName(), $chunk['c'] . "^" . $chunk['e']);
+            file_put_contents($this->outputPath . '/' . $directory . '/' . $this->getUniqueFileName(), $chunk['c'] . "^" . $chunk['e']);
         }
 
         return sizeof($chunks);
     }
 
-    private function _getDirectoryForEncryptedFiles()
+    /**
+     * @return string
+     */
+    private function getDirectoryForEncryptedFiles(): string
     {
         $id = md5($this->fileName);
         if (is_dir($this->outputPath . '/' . $id)) {
@@ -33,13 +45,18 @@ class FileFactory
         return $id;
     }
 
-    private function rrmdir($dir)
+    /**
+     * An external function for removing dir with it's all content
+     * @param $dir
+     */
+    private function rrmdir($dir): void
     {
         if (is_dir($dir)) {
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
-                    if (filetype($dir . "/" . $object) == "dir") rrmdir($dir . "/" . $object); else unlink($dir . "/" . $object);
+                    if (filetype($dir . "/" . $object) == "dir") $this->rrmdir($dir . "/" . $object);
+                    else unlink($dir . "/" . $object);
                 }
             }
             reset($objects);
@@ -47,7 +64,10 @@ class FileFactory
         }
     }
 
-    private function _getFileName()
+    /**
+     * @return string
+     */
+    private function getUniqueFileName(): string
     {
         return md5(uniqid());
     }

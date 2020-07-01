@@ -2,12 +2,20 @@
 
 namespace Alohomora\model\Decrypt;
 
+use Alohomora\model\Chunk\Chunk;
+
 class Decryptor
 {
     private $inputDirectory;
     private $fileName;
     private $privateKey;
 
+    /**
+     * Decryptor constructor.
+     * @param string $directory
+     * @param string $fileName
+     * @param string $privateKey
+     */
     public function __construct(string $directory, string $fileName, string $privateKey)
     {
         $this->inputDirectory = $directory;
@@ -15,16 +23,45 @@ class Decryptor
         $this->privateKey = $privateKey;
     }
 
+    /**
+     * @return mixed
+     */
     public function getDecryptedData()
     {
-        return $this->_decryptData();
+        return $this->decryptData();
+    }
+
+    /**
+     * @return mixed
+     */
+    private function decryptData()
+    {
+        $files = $this->getFileContents();
+
+        if (empty($files)) throw new \Error('No files to decode');
+
+        $contents = [];
+
+        foreach ($files as $file) {
+            $contents[] = $this->decryptSingleFile($file);
+        }
+
+        usort($contents, function(Chunk $a, Chunk $b) {
+            return $a->getStart() <=> $b->getStart();
+        });
+
+        $result = array_reduce($contents, function(string $acc, Chunk $item) {
+            return $acc.$item->getContent();
+        }, "");
+
+        return json_decode($result);
     }
 
     /**
      * @return array
      * @throws \Error
      */
-    private function _getFileContents()
+    private function getFileContents() : array
     {
         $directory = $this->inputDirectory . '/' . $this->fileName;
         if (!is_dir($directory)) throw new \Error("Given directory '$directory' doesn't exist.");
@@ -32,30 +69,27 @@ class Decryptor
 
         $files = [];
 
-        foreach ($filenames as $file)
-        {
-            $files[] = file_get_contents($directory.'/'.$file);
+        foreach ($filenames as $file) {
+            $files[] = file_get_contents($directory . '/' . $file);
         }
 
         return $files;
     }
 
-    private function _decryptSingleFile(string $file)
+    /**
+     * @param string $file
+     * @return Chunk
+     */
+    private function decryptSingleFile(string $file) : Chunk
     {
-        $file = base64_decode($file);
+
+        $file = explode('^', $file);
         $content = NULL;
-        openssl_open($file, $plaintext, NULL, $this->privateKey);
-        return $content;
-    }
-
-    private function _decryptData()
-    {
-        $files = $this->_getFileContents();
-
-        if(empty($files)) throw new \Error('No files to decode');
-
-        foreach ($files as $file) {
-            var_dump($this->_decryptSingleFile($file));
+        openssl_open(base64_decode($file[0]), $content, base64_decode($file[1]), $this->privateKey);
+        if(isset($content['s']) && isset($content['e']) && isset($content['c'])) {
+            return new Chunk($content['s'], $content['e'], $content['c']);
+        } else {
+            throw new \Error('Invalid or damaged data given');
         }
     }
 }

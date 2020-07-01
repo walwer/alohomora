@@ -2,17 +2,21 @@
 
 namespace Alohomora\model\Chunk;
 
+use PHPUnit\Util\Json;
+
 class ChunkFactory
 {
     const CHUNK_MAX_SIZE = 48;
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * @param string $string
      * @return array
      */
-    public function splitStringToChunks(string $string)
+    public function splitStringToChunks(string $string): array
     {
         $chunks = [];
         $baseChunks = mb_str_split($string, self::CHUNK_MAX_SIZE);
@@ -32,16 +36,10 @@ class ChunkFactory
      * @param string $part
      * @param int $start
      * @param int $end
-     * @return string
+     * @return Chunk
      */
-    private function _generateChunk(string $part, int $start, int $end)
+    private function _generateChunk(string $part, int $start, int $end) : Chunk
     {
-        $chunk = [
-            's' => $start,
-            'e' => $end,
-            'c' => $part
-        ];
-
-        return json_encode($chunk);
+        return new Chunk($start, $end, $part);
     }
 }

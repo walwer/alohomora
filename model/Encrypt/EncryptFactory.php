@@ -2,6 +2,8 @@
 
 namespace Alohomora\model\Encrypt;
 
+use Alohomora\model\Chunk\Chunk;
+
 class EncryptFactory
 {
     private $publicKey;
@@ -12,11 +14,17 @@ class EncryptFactory
         $this->chunks = $chunks;
     }
 
+    /**
+     * @param string $key
+     */
     public function setPublicKey(string $key)
     {
         $this->publicKey = $key;
     }
 
+    /**
+     * @return array
+     */
     public function getEncryptedChunks()
     {
         $encrypted = [];
@@ -28,11 +36,16 @@ class EncryptFactory
         return $encrypted;
     }
 
-    private function _encryptData(string $chunk)
+    /**
+     * @param Chunk $chunk
+     * @return array
+     */
+    private function _encryptData(Chunk $chunk)
     {
         $publicKey = openssl_get_publickey($this->publicKey);
         $encrypted = $e = NULL;
-        openssl_seal($chunk, $encrypted, $e, array($publicKey));
+        $stringifiedChunk = $chunk->getJSONStringifiedChunk();
+        openssl_seal($stringifiedChunk, $encrypted, $e, array($publicKey));
         return ['c' => base64_encode($encrypted), 'e' => base64_encode($e[0])];
     }
 }

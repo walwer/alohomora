@@ -25,6 +25,9 @@ class Alohomora
         $this->entry = json_encode($entry);
     }
 
+    /**
+     * @param string $name
+     */
     public function setFileName(string $name)
     {
         $this->fileName = $name;
@@ -55,6 +58,11 @@ class Alohomora
         $this->outputPath = $output;
     }
 
+    /**
+     * @param string $directory
+     * @param string $fileName
+     * @param string $privateKey
+     */
     public function decryptData(string $directory, string $fileName, string $privateKey)
     {
         $decryptor = new Decryptor($directory, $fileName, $privateKey);
