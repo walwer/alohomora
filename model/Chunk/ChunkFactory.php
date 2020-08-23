@@ -2,17 +2,20 @@
 
 namespace Alohomora\model\Chunk;
 
-use PHPUnit\Util\Json;
-
 class ChunkFactory
 {
     const CHUNK_MAX_SIZE = 48;
 
+    /**
+     * ChunkFactory constructor.
+     */
     public function __construct()
     {
     }
 
     /**
+     * Splits given string into Chunk(s)
+     * Size of the Chunk is specified by CHUNK_MAX_SIZE const
      * @param string $string
      * @return array
      */
@@ -27,19 +30,20 @@ class ChunkFactory
 
             if (strlen($chunk) < self::CHUNK_MAX_SIZE) $end = strlen($chunk) + $start;
 
-            $chunks[] = $this->_generateChunk($chunk, $start, $end - 1);
+            $chunks[] = $this->generateChunk($chunk, $start, $end - 1);
         }
 
         return $chunks;
     }
 
     /**
+     * Creates a Chunk object by given arguments
      * @param string $part
      * @param int $start
      * @param int $end
      * @return Chunk
      */
-    private function _generateChunk(string $part, int $start, int $end) : Chunk
+    private function generateChunk(string $part, int $start, int $end) : Chunk
     {
         return new Chunk($start, $end, $part);
     }

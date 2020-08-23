@@ -72,6 +72,7 @@ class Chunk
     }
 
     /**
+     * Returns a chunk in JSON format
      * @return string
      */
     public function getJSONStringifiedChunk(): string
