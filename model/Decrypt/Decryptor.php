@@ -1,5 +1,4 @@
 <?php
-
 namespace Alohomora\model\Decrypt;
 
 use Alohomora\model\Chunk\Chunk;

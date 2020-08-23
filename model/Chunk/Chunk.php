@@ -1,8 +1,5 @@
 <?php
-
-
 namespace Alohomora\model\Chunk;
-
 
 class Chunk
 {

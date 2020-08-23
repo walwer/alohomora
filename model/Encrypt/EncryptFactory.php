@@ -1,5 +1,4 @@
 <?php
-
 namespace Alohomora\model\Encrypt;
 
 use Alohomora\model\Chunk\Chunk;
@@ -9,8 +8,13 @@ class EncryptFactory
     private $publicKey;
     private $chunks;
 
+    /**
+     * EncryptFactory constructor.
+     * @param array $chunks
+     */
     public function __construct(array $chunks)
     {
+        /** @var Chunk[] $chunks */
         $this->chunks = $chunks;
     }
 
@@ -23,6 +27,7 @@ class EncryptFactory
     }
 
     /**
+     * Returns array of encrypted chunks
      * @return array
      */
     public function getEncryptedChunks()
@@ -30,17 +35,18 @@ class EncryptFactory
         $encrypted = [];
 
         foreach ($this->chunks as $key => $chunk) {
-            $encrypted[] = $this->_encryptData($chunk);
+            $encrypted[] = $this->encryptData($chunk);
         }
 
         return $encrypted;
     }
 
     /**
+     * Encrypts single Chunk with public key
      * @param Chunk $chunk
      * @return array
      */
-    private function _encryptData(Chunk $chunk)
+    private function encryptData(Chunk $chunk)
     {
         $publicKey = openssl_get_publickey($this->publicKey);
         $encrypted = $e = NULL;

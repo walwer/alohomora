@@ -1,5 +1,4 @@
 <?php
-
 namespace Alohomora\model\File;
 
 class FileFactory

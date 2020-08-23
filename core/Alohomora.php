@@ -1,5 +1,4 @@
 <?php
-
 namespace Alohomora\core;
 
 use Alohomora\model\Chunk\ChunkFactory;
@@ -13,31 +12,38 @@ class Alohomora
     private $outputPath;
     private $fileName;
 
+    /**
+     * Alohomora constructor.
+     */
     public function __construct()
     {
     }
 
     /**
+     * Sets the entry to encrypt
      * @param $entry
      */
-    public function setEntry($entry)
+    public function setEntry($entry) : void
     {
         $this->entry = json_encode($entry);
     }
 
     /**
+     * Sets the file name of the entry
+     * This name will be md5 hashed to also cover
+     * the primary name of the file
      * @param string $name
      */
-    public function setFileName(string $name)
+    public function setFileName(string $name) : void
     {
         $this->fileName = $name;
     }
 
     /**
-     * @label('This is the main function of Alohomora that encrypt the given entry')
+     * Encrypts the given string entry
      * @param string $publicKey
      */
-    public function encryptEntry(string $publicKey)
+    public function encryptEntry(string $publicKey) : void
     {
         $chunkFactory = new ChunkFactory();
         $chunks = $chunkFactory->splitStringToChunks($this->entry);
@@ -51,14 +57,18 @@ class Alohomora
     }
 
     /**
+     * Sets the destination directory of encrypted files
      * @param string $output
      */
-    public function setOutputDirectory(string $output)
+    public function setOutputDirectory(string $output) : void
     {
         $this->outputPath = $output;
     }
 
     /**
+     * Decrypts the encrpted data in the specified directory with specified name (key)
+     * with private key
+     * and with optional use of passphrase of private key
      * @param string $directory
      * @param string $fileName
      * @param string $privateKey
