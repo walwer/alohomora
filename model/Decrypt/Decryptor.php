@@ -27,6 +27,7 @@ class Decryptor
     }
 
     /**
+     * An interface function to access decryptData() method
      * @return mixed
      */
     public function getDecryptedData()
@@ -35,6 +36,7 @@ class Decryptor
     }
 
     /**
+     * Makes decruption loop of given array of encrypted files contents
      * @return mixed
      */
     private function decryptData()
@@ -61,6 +63,8 @@ class Decryptor
     }
 
     /**
+     * Gets all files contents in from specified (md5) directory
+     * and places them as base64 into array
      * @return array
      * @throws \Error
      */
@@ -82,6 +86,7 @@ class Decryptor
     }
 
     /**
+     * Decrypts a single file given
      * @param string $file
      * @return Chunk
      */
@@ -104,6 +109,10 @@ class Decryptor
         }
     }
 
+    /**
+     * Parses resource from file with private key
+     * @return false|resource
+     */
     private function parsePrivateKey() {
         return openssl_get_privatekey($this->privateKey, $this->passphrase);
     }
