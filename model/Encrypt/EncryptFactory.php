@@ -44,8 +44,10 @@ class EncryptFactory
     {
         $publicKey = openssl_get_publickey($this->publicKey);
         $encrypted = $e = NULL;
+
         $stringifiedChunk = $chunk->getJSONStringifiedChunk();
         openssl_seal($stringifiedChunk, $encrypted, $e, array($publicKey));
+
         return ['c' => base64_encode($encrypted), 'e' => base64_encode($e[0])];
     }
 }

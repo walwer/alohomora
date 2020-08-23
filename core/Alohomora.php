@@ -62,10 +62,13 @@ class Alohomora
      * @param string $directory
      * @param string $fileName
      * @param string $privateKey
+     * @param string $keyPassphrase
+     * @return mixed
      */
-    public function decryptData(string $directory, string $fileName, string $privateKey)
+    public function decryptData(string $directory, string $fileName, string $privateKey, string $keyPassphrase = '')
     {
-        $decryptor = new Decryptor($directory, $fileName, $privateKey);
-        $decryptor->getDecryptedData();
+        $decryptor = new Decryptor($directory, $fileName, $privateKey, $keyPassphrase);
+
+        return $decryptor->getDecryptedData();
     }
 }

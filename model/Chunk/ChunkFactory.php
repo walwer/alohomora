@@ -26,6 +26,7 @@ class ChunkFactory
             $end = (($key * self::CHUNK_MAX_SIZE) + self::CHUNK_MAX_SIZE);
 
             if (strlen($chunk) < self::CHUNK_MAX_SIZE) $end = strlen($chunk) + $start;
+
             $chunks[] = $this->_generateChunk($chunk, $start, $end - 1);
         }
 
