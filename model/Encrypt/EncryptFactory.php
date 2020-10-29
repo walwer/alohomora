@@ -5,12 +5,17 @@ use Alohomora\model\Chunk\Chunk;
 
 class EncryptFactory
 {
+    /** @var string */
     private $publicKey;
+
+    /** @var Chunk[] */
     private $chunks;
 
     /**
      * EncryptFactory constructor.
      * @param array $chunks
+     *
+     * @return void
      */
     public function __construct(array $chunks)
     {
@@ -20,6 +25,8 @@ class EncryptFactory
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     public function setPublicKey(string $key)
     {
@@ -44,6 +51,7 @@ class EncryptFactory
     /**
      * Encrypts single Chunk with public key
      * @param Chunk $chunk
+     *
      * @return array
      */
     private function encryptData(Chunk $chunk)

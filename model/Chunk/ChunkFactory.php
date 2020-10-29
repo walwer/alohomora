@@ -3,25 +3,19 @@ namespace Alohomora\model\Chunk;
 
 class ChunkFactory
 {
-    const CHUNK_MAX_SIZE = 48;
-
-    /**
-     * ChunkFactory constructor.
-     */
-    public function __construct()
-    {
-    }
+    public const CHUNK_MAX_SIZE = 48;
 
     /**
      * Splits given string into Chunk(s)
      * Size of the Chunk is specified by CHUNK_MAX_SIZE const
      * @param string $string
+     *
      * @return array
      */
     public function splitStringToChunks(string $string): array
     {
         $chunks = [];
-        $baseChunks = mb_str_split($string, self::CHUNK_MAX_SIZE);
+        $baseChunks = str_split($string, self::CHUNK_MAX_SIZE);
 
         foreach ($baseChunks as $key => $chunk) {
             $start = $key * self::CHUNK_MAX_SIZE;
@@ -40,6 +34,7 @@ class ChunkFactory
      * @param string $part
      * @param int $start
      * @param int $end
+     *
      * @return Chunk
      */
     private function generateChunk(string $part, int $start, int $end) : Chunk

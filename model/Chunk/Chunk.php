@@ -3,8 +3,13 @@ namespace Alohomora\model\Chunk;
 
 class Chunk
 {
+    /** @var int  */
     private $start;
+
+    /** @var int  */
     private $end;
+
+    /** @var string  */
     private $content;
 
     /**
@@ -30,6 +35,8 @@ class Chunk
 
     /**
      * @param int $start
+     *
+     * @return void
      */
     public function setStart(int $start): void
     {
@@ -46,6 +53,8 @@ class Chunk
 
     /**
      * @param int $end
+     *
+     * @return void
      */
     public function setEnd(int $end): void
     {
@@ -54,6 +63,8 @@ class Chunk
 
     /**
      * @return string
+     *
+     * @return void
      */
     public function getContent(): string
     {
@@ -62,6 +73,8 @@ class Chunk
 
     /**
      * @param string $content
+     *
+     * @return void
      */
     public function setContent(string $content): void
     {

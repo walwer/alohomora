@@ -11,6 +11,7 @@
     ],
     "minimum-stability": "alpha",
     "require": {
+        "php": "^7.3",
         "ext-mbstring": "*",
         "ext-json": "*",
         "ext-openssl": "*"

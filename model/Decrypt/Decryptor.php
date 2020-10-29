@@ -2,16 +2,23 @@
 namespace Alohomora\model\Decrypt;
 
 use Alohomora\model\Chunk\Chunk;
+use Exception;
 
 class Decryptor
 {
+    /** @var string  */
     private $inputDirectory;
+
+    /** @var string  */
     private $fileName;
+
+    /** @var string  */
     private $privateKey;
+
+    /** @var string  */
     private $passphrase;
 
     /**
-     * Decryptor constructor.
      * @param string $directory
      * @param string $fileName
      * @param string $privateKey
@@ -26,8 +33,7 @@ class Decryptor
     }
 
     /**
-     * An interface function to access decryptData() method
-     * @return mixed
+     * @return array
      */
     public function getDecryptedData()
     {
@@ -36,13 +42,15 @@ class Decryptor
 
     /**
      * Makes decruption loop of given array of encrypted files contents
-     * @return mixed
+     * @return array
+     *
+     * @throws Exception
      */
     private function decryptData()
     {
         $files = $this->getFileContents();
 
-        if (empty($files)) throw new \Error('No files to decode');
+        if (empty($files)) throw new Exception('No files to decode');
 
         $contents = [];
 
@@ -65,16 +73,18 @@ class Decryptor
      * Gets all files contents in from specified (md5) directory
      * and places them as base64 into array
      * @return array
-     * @throws \Error
+     *
+     * @throws Exception
      */
     private function getFileContents() : array
     {
         $directory = $this->inputDirectory . '/' . $this->fileName;
 
-        if (!is_dir($directory)) throw new \Error("Given directory '$directory' doesn't exist.");
+        if (!is_dir($directory)) {
+            throw new Exception("Given directory '$directory' doesn't exist.");
+        }
 
         $filenames = array_diff(scandir($directory, SCANDIR_SORT_DESCENDING), array('..', '.'));
-
         $files = [];
 
         foreach ($filenames as $file) {
@@ -87,7 +97,10 @@ class Decryptor
     /**
      * Decrypts a single file given
      * @param string $file
+     *
      * @return Chunk
+     *
+     * @throws Exception
      */
     private function decryptSingleFile(string $file) : Chunk
     {
@@ -104,7 +117,7 @@ class Decryptor
         if(isset($content['s']) && isset($content['e']) && isset($content['c'])) {
             return new Chunk($content['s'], $content['e'], $content['c']);
         } else {
-            throw new \Error('Invalid or damaged data given');
+            throw new Exception('Invalid or damaged data given');
         }
     }
 
