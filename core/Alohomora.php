@@ -18,7 +18,6 @@ class Alohomora
     private $fileName;
 
     /**
-     * Sets the entry to encrypt
      * @param array $entry
      *
      * @return void
@@ -29,9 +28,6 @@ class Alohomora
     }
 
     /**
-     * Sets the file name of the entry
-     * This name will be md5 hashed to also cover
-     * the primary name of the file
      * @param string $name
      *
      * @return void
@@ -42,7 +38,6 @@ class Alohomora
     }
 
     /**
-     * Encrypts the given string entry
      * @param string $publicKey
      *
      * @return void
@@ -61,7 +56,6 @@ class Alohomora
     }
 
     /**
-     * Sets the destination directory of encrypted files
      * @param string $output
      *
      * @return void
@@ -72,9 +66,6 @@ class Alohomora
     }
 
     /**
-     * Decrypts the encrpted data in the specified directory with specified name (key)
-     * with private key
-     * and with optional use of passphrase of private key
      * @param string $directory
      * @param string $fileName
      * @param string $privateKey
