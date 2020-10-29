@@ -8,22 +8,22 @@ use Alohomora\model\File\FileFactory;
 
 class Alohomora
 {
+    /** @var string */
     private $entry;
+
+    /** @var string */
     private $outputPath;
+
+    /** @var string */
     private $fileName;
 
     /**
-     * Alohomora constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Sets the entry to encrypt
-     * @param $entry
+     * @param array $entry
+     *
+     * @return void
      */
-    public function setEntry($entry) : void
+    public function setEntry(array $entry) : void
     {
         $this->entry = json_encode($entry);
     }
@@ -33,6 +33,8 @@ class Alohomora
      * This name will be md5 hashed to also cover
      * the primary name of the file
      * @param string $name
+     *
+     * @return void
      */
     public function setFileName(string $name) : void
     {
@@ -42,6 +44,8 @@ class Alohomora
     /**
      * Encrypts the given string entry
      * @param string $publicKey
+     *
+     * @return void
      */
     public function encryptEntry(string $publicKey) : void
     {
@@ -59,6 +63,8 @@ class Alohomora
     /**
      * Sets the destination directory of encrypted files
      * @param string $output
+     *
+     * @return void
      */
     public function setOutputDirectory(string $output) : void
     {
@@ -73,7 +79,8 @@ class Alohomora
      * @param string $fileName
      * @param string $privateKey
      * @param string $keyPassphrase
-     * @return mixed
+     *
+     * @return array
      */
     public function decryptData(string $directory, string $fileName, string $privateKey, string $keyPassphrase = '')
     {

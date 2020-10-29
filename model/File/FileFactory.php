@@ -3,7 +3,10 @@ namespace Alohomora\model\File;
 
 class FileFactory
 {
+    /** @var string  */
     private $outputPath;
+
+    /** @var string  */
     private $fileName;
 
     /**
@@ -19,6 +22,7 @@ class FileFactory
 
     /**
      * @param array $chunks
+     *
      * @return int
      */
     public function createFilesFromChunks(array $chunks): int
@@ -55,6 +59,8 @@ class FileFactory
     /**
      * An external function for removing dir with it's all content
      * @param $dir
+     *
+     * @return void
      */
     private function rrmdir($dir): void
     {

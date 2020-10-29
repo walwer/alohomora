@@ -5,13 +5,19 @@ use Alohomora\model\Chunk\Chunk;
 
 class Decryptor
 {
+    /** @var string  */
     private $inputDirectory;
+
+    /** @var string  */
     private $fileName;
+
+    /** @var string  */
     private $privateKey;
+
+    /** @var string  */
     private $passphrase;
 
     /**
-     * Decryptor constructor.
      * @param string $directory
      * @param string $fileName
      * @param string $privateKey
@@ -26,8 +32,7 @@ class Decryptor
     }
 
     /**
-     * An interface function to access decryptData() method
-     * @return mixed
+     * @return array
      */
     public function getDecryptedData()
     {
@@ -36,7 +41,7 @@ class Decryptor
 
     /**
      * Makes decruption loop of given array of encrypted files contents
-     * @return mixed
+     * @return array
      */
     private function decryptData()
     {
@@ -65,16 +70,18 @@ class Decryptor
      * Gets all files contents in from specified (md5) directory
      * and places them as base64 into array
      * @return array
+     *
      * @throws \Error
      */
     private function getFileContents() : array
     {
         $directory = $this->inputDirectory . '/' . $this->fileName;
 
-        if (!is_dir($directory)) throw new \Error("Given directory '$directory' doesn't exist.");
+        if (!is_dir($directory)) {
+            throw new \Error("Given directory '$directory' doesn't exist.");
+        }
 
         $filenames = array_diff(scandir($directory, SCANDIR_SORT_DESCENDING), array('..', '.'));
-
         $files = [];
 
         foreach ($filenames as $file) {
@@ -87,6 +94,7 @@ class Decryptor
     /**
      * Decrypts a single file given
      * @param string $file
+     *
      * @return Chunk
      */
     private function decryptSingleFile(string $file) : Chunk
