@@ -2,6 +2,7 @@
 namespace Alohomora\model\Decrypt;
 
 use Alohomora\model\Chunk\Chunk;
+use Exception;
 
 class Decryptor
 {
@@ -42,12 +43,14 @@ class Decryptor
     /**
      * Makes decruption loop of given array of encrypted files contents
      * @return array
+     *
+     * @throws Exception
      */
     private function decryptData()
     {
         $files = $this->getFileContents();
 
-        if (empty($files)) throw new \Error('No files to decode');
+        if (empty($files)) throw new Exception('No files to decode');
 
         $contents = [];
 
@@ -71,14 +74,14 @@ class Decryptor
      * and places them as base64 into array
      * @return array
      *
-     * @throws \Error
+     * @throws Exception
      */
     private function getFileContents() : array
     {
         $directory = $this->inputDirectory . '/' . $this->fileName;
 
         if (!is_dir($directory)) {
-            throw new \Error("Given directory '$directory' doesn't exist.");
+            throw new Exception("Given directory '$directory' doesn't exist.");
         }
 
         $filenames = array_diff(scandir($directory, SCANDIR_SORT_DESCENDING), array('..', '.'));
@@ -96,6 +99,8 @@ class Decryptor
      * @param string $file
      *
      * @return Chunk
+     *
+     * @throws Exception
      */
     private function decryptSingleFile(string $file) : Chunk
     {
@@ -112,7 +117,7 @@ class Decryptor
         if(isset($content['s']) && isset($content['e']) && isset($content['c'])) {
             return new Chunk($content['s'], $content['e'], $content['c']);
         } else {
-            throw new \Error('Invalid or damaged data given');
+            throw new Exception('Invalid or damaged data given');
         }
     }
 
